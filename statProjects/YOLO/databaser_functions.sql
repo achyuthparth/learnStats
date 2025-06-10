@@ -37,6 +37,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 
+
 -- Image Categorization
 
 -- Assign categories to an image
@@ -55,6 +56,7 @@ BEGIN
     RETURN QUERY SELECT category_name, noise_level FROM image_category WHERE image_id = image_id;
 END;
 $$ LANGUAGE plpgsql;
+
 
 
 -- Annotations
@@ -86,6 +88,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 
+
 -- Dataset Partitioning
 
 -- Assign dataset partition (train/test/val)
@@ -104,6 +107,7 @@ BEGIN
     RETURN QUERY SELECT image_id, source_type FROM dataset_partition WHERE dataset_type = dataset_type;
 END;
 $$ LANGUAGE plpgsql;
+
 
 
 -- Image Storage and Retrieval
