@@ -5,7 +5,7 @@ channels:
   - https://repo.anaconda.com/pkgs/main
   - https://repo.anaconda.com/pkgs/r
   - https://repo.anaconda.com/pkgs/msys2
-dependencies:
+dependencies: 
   - bzip2=1.0.8=h2466b09_7
   - ca-certificates=2025.4.26=h4c7d964_0
   - libexpat=2.7.0=he0c23c2_0

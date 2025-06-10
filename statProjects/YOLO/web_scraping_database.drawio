@@ -1,9 +1,182 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36 Edg/136.0.0.0" version="27.1.4">
-  <diagram name="Page-1" id="dG99938WQKlNuKEcHw-s">
-    <mxGraphModel dx="2058" dy="1146" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/27.0.9 Chrome/134.0.6998.205 Electron/35.4.0 Safari/537.36" version="27.0.9" pages="2">
+  <diagram name="Folders" id="dG99938WQKlNuKEcHw-s">
+    <mxGraphModel dx="818" dy="559" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-2" value="Database Schema for Web Scraping Training Images for Transfer Learning YOLO Model for Construction Image Classes" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="270" y="280" width="740" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-3" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Legend&lt;/h1&gt;&lt;div&gt;Rectangle: Folders&lt;/div&gt;&lt;div&gt;Arrows: Relationships&lt;/div&gt;&lt;div&gt;Tables: Database Schema&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="30" y="350" width="180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="rXoGOwhrwI4_fYIulUnK-4" target="rXoGOwhrwI4_fYIulUnK-14">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="610" y="480" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-70" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="rXoGOwhrwI4_fYIulUnK-4" target="rXoGOwhrwI4_fYIulUnK-69">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-4" value="COCO" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="260" y="320" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-6" value="train" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="570" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-10" value="test" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="110" y="570" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-12" value="val" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="420" y="570" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="rXoGOwhrwI4_fYIulUnK-14" target="rXoGOwhrwI4_fYIulUnK-16">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="640" y="530" />
+              <mxPoint x="640" y="530" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="rXoGOwhrwI4_fYIulUnK-14" target="rXoGOwhrwI4_fYIulUnK-15">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="800" y="480" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="rXoGOwhrwI4_fYIulUnK-14" target="rXoGOwhrwI4_fYIulUnK-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-14" value="COCO_construction" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="550" y="450" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-15" value="train" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="740" y="570" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-16" value="test" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="580" y="570" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-17" value="val" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="890" y="570" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="rXoGOwhrwI4_fYIulUnK-21" target="rXoGOwhrwI4_fYIulUnK-26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZtV6eKBjwTQanZhtTdlx-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="rXoGOwhrwI4_fYIulUnK-21" target="rXoGOwhrwI4_fYIulUnK-74">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-21" value="Mined" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="70" y="750" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-26" value="Respective construction class" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="470" y="750" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="rXoGOwhrwI4_fYIulUnK-37" target="rXoGOwhrwI4_fYIulUnK-41">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="130" y="1030" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-45" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="rXoGOwhrwI4_fYIulUnK-37" target="rXoGOwhrwI4_fYIulUnK-46">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="142.5" y="1250" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="130" y="1030" />
+              <mxPoint x="250" y="1030" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-37" value="Generated" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="70" y="870" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-41" value="Respective construction class" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="485" y="990" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-47" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="rXoGOwhrwI4_fYIulUnK-46" target="rXoGOwhrwI4_fYIulUnK-48">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="380" y="1080" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-49" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="rXoGOwhrwI4_fYIulUnK-46" target="rXoGOwhrwI4_fYIulUnK-50">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="250" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-46" value="Mixed Class" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="190" y="1050" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-48" value="less noise" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="340" y="1050" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-50" value="more noise" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="190" y="1150" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-71" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="rXoGOwhrwI4_fYIulUnK-69" target="rXoGOwhrwI4_fYIulUnK-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-72" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="rXoGOwhrwI4_fYIulUnK-69" target="rXoGOwhrwI4_fYIulUnK-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-73" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="rXoGOwhrwI4_fYIulUnK-69" target="rXoGOwhrwI4_fYIulUnK-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-69" value="COCO_standard" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="250" y="450" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-76" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="rXoGOwhrwI4_fYIulUnK-74" target="rXoGOwhrwI4_fYIulUnK-77">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="170" y="830" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="370" y="880" />
+              <mxPoint x="550" y="880" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-78" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="rXoGOwhrwI4_fYIulUnK-74" target="rXoGOwhrwI4_fYIulUnK-79">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="380" y="910" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-74" value="mixed class" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="310" y="800" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-77" value="high noise" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="490" y="900" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rXoGOwhrwI4_fYIulUnK-79" value="low noise" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="310" y="900" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZtV6eKBjwTQanZhtTdlx-1" value="Assume every folder tree&#39;s leaves below have their own test/trian/val folders" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="85" y="700" width="400" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="y_D24yTND5aEvYo-Bwze" name="Database Schema">
+    <mxGraphModel dx="1395" dy="954" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="r_cjlKP0dEog_J9cwVYJ-6" value="&lt;h3&gt;&lt;strong&gt;🔹 Main Image Table (&lt;/strong&gt;&lt;code&gt;images&lt;/code&gt;&lt;strong&gt;)&lt;/strong&gt;&lt;/h3&gt;&lt;div&gt;&lt;div&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;strong&gt;Column Name&lt;/strong&gt;&lt;/th&gt;&lt;th&gt;&lt;strong&gt;Data Type&lt;/strong&gt;&lt;/th&gt;&lt;th&gt;&lt;strong&gt;Description&lt;/strong&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;image_id&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;INTEGER PRIMARY KEY&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Unique image identifier&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;image_url&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;TEXT UNIQUE&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Direct URL if web-scraped&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;file_path&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;TEXT UNIQUE&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Local file storage path&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;resolution&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;TEXT&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Image dimensions (e.g., &quot;1024x768&quot;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;date_collected&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;DATETIME DEFAULT CURRENT_TIMESTAMP&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Timestamp of collection&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="90" y="260" width="560" height="210" as="geometry" />
+        </mxCell>
+        <UserObject label="&lt;h3&gt;&lt;strong&gt;🔹 A&lt;/strong&gt;&lt;code&gt;nnotations&lt;/code&gt;&lt;strong&gt; Table&lt;/strong&gt;&lt;/h3&gt;&lt;div&gt;&lt;div&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;strong&gt;Column Name&lt;/strong&gt;&lt;/th&gt;&lt;th&gt;&lt;strong&gt;Data Type&lt;/strong&gt;&lt;/th&gt;&lt;th&gt;&lt;strong&gt;Description&lt;/strong&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;annotation_id&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;INTEGER PRIMARY KEY&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Unique identifier for each bounding box&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;image_id&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;INTEGER NOT NULL&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Foreign key linking to &lt;code&gt;images.id&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;bounding_box&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;TEXT NOT NULL&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Stores coordinates (&lt;code&gt;x, y, width, height&lt;/code&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;category_id&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;INTEGER NOT NULL&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Foreign key linking to &lt;code&gt;image_category.category_id&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;confidence_score&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;REAL&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Prediction confidence (if automated)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;annotation_source&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;TEXT CHECK (annotation_source IN (&#39;manual&#39;, &#39;automated&#39;))&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Defines if annotation was &lt;strong&gt;manually labeled or AI-generated&lt;/strong&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;" link="&lt;h3&gt;&lt;strong&gt;🔹 Updated &lt;/strong&gt;&lt;code&gt;annotations&lt;/code&gt;&lt;strong&gt; Table&lt;/strong&gt;&lt;/h3&gt;&lt;div&gt;&lt;div&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;strong&gt;Column Name&lt;/strong&gt;&lt;/th&gt;&lt;th&gt;&lt;strong&gt;Data Type&lt;/strong&gt;&lt;/th&gt;&lt;th&gt;&lt;strong&gt;Description&lt;/strong&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;annotation_id&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;INTEGER PRIMARY KEY&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Unique identifier for each bounding box&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;image_id&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;INTEGER NOT NULL&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Foreign key linking to &lt;code&gt;images.id&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;bounding_box&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;TEXT NOT NULL&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Stores coordinates (&lt;code&gt;x, y, width, height&lt;/code&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;category_id&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;INTEGER NOT NULL&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Foreign key linking to &lt;code&gt;image_category.category_id&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;confidence_score&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;REAL&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Prediction confidence (if automated)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;annotation_source&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;TEXT CHECK (annotation_source IN (&#39;manual&#39;, &#39;automated&#39;))&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Defines if annotation was &lt;strong&gt;manually labeled or AI-generated&lt;/strong&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;" id="r_cjlKP0dEog_J9cwVYJ-8">
+          <mxCell style="text;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+            <mxGeometry x="90" y="640" width="560" height="260" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;h3&gt;&lt;strong&gt;🟢 Image Categorization Table (&lt;/strong&gt;&lt;code&gt;image_category&lt;/code&gt;&lt;strong&gt;)&lt;/strong&gt;&lt;/h3&gt;&lt;div&gt;&lt;div&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;strong&gt;Column Name&lt;/strong&gt;&lt;/th&gt;&lt;th&gt;&lt;strong&gt;Data Type&lt;/strong&gt;&lt;/th&gt;&lt;th&gt;&lt;strong&gt;Description&lt;/strong&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;category_id&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;INTEGER PRIMARY KEY&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Unique identifier for the category entry&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;image_id&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;INTEGER NOT NULL&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Foreign key linking to &lt;code&gt;images.id&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;category_name&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;TEXT NOT NULL&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Object type (e.g., &lt;code&gt;&quot;crane&quot;, &quot;bulldozer&quot;, &quot;hard_hat&quot;&lt;/code&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;noise_level&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;TEXT CHECK (noise_level IN (&#39;low&#39;, &#39;high&#39;, &#39;medium&#39;, NULL))&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Describes image quality/noise level&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;" link="&lt;h3&gt;&lt;strong&gt;🟢 Image Categorization Table (&lt;/strong&gt;&lt;code&gt;image_category&lt;/code&gt;&lt;strong&gt;)&lt;/strong&gt;&lt;/h3&gt;&lt;div&gt;&lt;div&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;strong&gt;Column Name&lt;/strong&gt;&lt;/th&gt;&lt;th&gt;&lt;strong&gt;Data Type&lt;/strong&gt;&lt;/th&gt;&lt;th&gt;&lt;strong&gt;Description&lt;/strong&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;category_id&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;INTEGER PRIMARY KEY&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Unique identifier for the category entry&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;image_id&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;INTEGER NOT NULL&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Foreign key linking to &lt;code&gt;images.id&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;category_name&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;TEXT NOT NULL&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Object type (e.g., &lt;code&gt;&quot;crane&quot;, &quot;bulldozer&quot;, &quot;hard_hat&quot;&lt;/code&gt;)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;noise_level&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;TEXT CHECK (noise_level IN (&#39;low&#39;, &#39;high&#39;, &#39;more&#39;, &#39;less&#39;))&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Describes image quality/noise level&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;" id="uUxLti_I623045mzROml-1">
+          <mxCell style="text;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+            <mxGeometry x="90" y="445" width="560" height="210" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;h4&gt;&lt;strong&gt;Dataset Partition Table (&lt;/strong&gt;&lt;code&gt;dataset_partition&lt;/code&gt;&lt;strong&gt;)&lt;/strong&gt;&lt;/h4&gt;&lt;div&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;strong&gt;Column Name&lt;/strong&gt;&lt;/th&gt;&lt;th&gt;&lt;strong&gt;Data Type&lt;/strong&gt;&lt;/th&gt;&lt;th&gt;&lt;strong&gt;Description&lt;/strong&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;partition_id&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;INTEGER PRIMARY KEY&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Unique identifier for the partition entry&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;image_id&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;INTEGER NOT NULL&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Foreign key linking to &lt;code&gt;images.id&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;font face=&quot;monospace&quot;&gt;dataset_split&lt;/font&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;TEXT CHECK (dataset_type IN (&#39;train&#39;, &#39;test&#39;, &#39;val&#39;))&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Defines dataset split&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;source_type&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;TEXT CHECK (source_type IN (&#39;COCO_standard&#39;, &#39;COCO_construction&#39;, &#39;Generated&#39;, &#39;Web_scraped&#39;))&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Tracks dataset origin&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;" link="&lt;h4&gt;&lt;strong&gt;Dataset Partition Table (&lt;/strong&gt;&lt;code&gt;dataset_partition&lt;/code&gt;&lt;strong&gt;)&lt;/strong&gt;&lt;/h4&gt;&lt;div&gt;&lt;div&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;strong&gt;Column Name&lt;/strong&gt;&lt;/th&gt;&lt;th&gt;&lt;strong&gt;Data Type&lt;/strong&gt;&lt;/th&gt;&lt;th&gt;&lt;strong&gt;Description&lt;/strong&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;partition_id&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;INTEGER PRIMARY KEY&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Unique identifier for the partition entry&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;image_id&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;INTEGER NOT NULL&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Foreign key linking to &lt;code&gt;images.id&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;dataset_type&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;TEXT CHECK (dataset_type IN (&#39;train&#39;, &#39;test&#39;, &#39;val&#39;))&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Defines dataset split&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;code&gt;source_type&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;TEXT CHECK (source_type IN (&#39;COCO_standard&#39;, &#39;COCO_construction&#39;, &#39;Generated&#39;, &#39;Web_scraped&#39;))&lt;/code&gt;&lt;/td&gt;&lt;td&gt;Tracks dataset origin&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;" id="uUxLti_I623045mzROml-2">
+          <mxCell style="text;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+            <mxGeometry x="90" y="900" width="560" height="250" as="geometry" />
+          </mxCell>
+        </UserObject>
       </root>
     </mxGraphModel>
   </diagram>
