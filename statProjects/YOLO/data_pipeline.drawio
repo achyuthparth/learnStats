@@ -95,14 +95,24 @@
         <mxCell id="hhONIXzgYwJI5P6wlXU--19" value="Inference" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
           <mxGeometry x="730" y="470" width="120" height="60" as="geometry" />
         </mxCell>
+        <mxCell id="hhONIXzgYwJI5P6wlXU--28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="hhONIXzgYwJI5P6wlXU--21" target="hhONIXzgYwJI5P6wlXU--27">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="950" y="570" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
         <mxCell id="hhONIXzgYwJI5P6wlXU--21" value="Results" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="840" y="570" width="120" height="60" as="geometry" />
+          <mxGeometry x="730" y="550" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="hhONIXzgYwJI5P6wlXU--25" value="If satisfactory performance" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="890" y="480" width="60" height="30" as="geometry" />
         </mxCell>
         <mxCell id="hhONIXzgYwJI5P6wlXU--26" value="If not satisfactory performance" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="1090" y="455" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hhONIXzgYwJI5P6wlXU--27" value="New Construction Specific YOLO Model" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="860" y="590" width="170" height="120" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
