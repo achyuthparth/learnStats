@@ -99,7 +99,7 @@
           <mxGeometry x="840" y="570" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="hhONIXzgYwJI5P6wlXU--25" value="If satisfactory performance" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="890" y="485" width="60" height="30" as="geometry" />
+          <mxGeometry x="890" y="480" width="60" height="30" as="geometry" />
         </mxCell>
         <mxCell id="hhONIXzgYwJI5P6wlXU--26" value="If not satisfactory performance" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="1090" y="455" width="60" height="30" as="geometry" />
