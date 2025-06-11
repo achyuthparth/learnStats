@@ -75,7 +75,7 @@ CREATE OR REPLACE FUNCTION get_annotations(image_id INTEGER)
 RETURNS TABLE (bounding_box TEXT, category_name TEXT, confidence_score REAL) AS $$
 BEGIN
     RETURN QUERY SELECT bounding_box, category_name, confidence_score 
-                 FROM annotations WHERE image_id = image_id;
+                FROM annotations WHERE image_id = image_id;
 END;
 $$ LANGUAGE plpgsql;
 

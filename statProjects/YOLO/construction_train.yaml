@@ -1,9 +1,0 @@
-train: C:/Users/achyu/COCO/construction/train2017
-val: C:/Users/achyu/COCO/construction/val2017
-nc: 20  # Number of classes
-names: [
-  "crane", "bulldozer", "forklift", "excavator", "cement_mixer", "dump_truck", "backhoe", "loader", "paver",
-  "hard_hat", "safety_vest", "safety_goggles", "gloves", "boots", "harness", "respirator_mask",
-  "scaffolding", "barricade", "traffic_cone", "construction_sign", "wheelbarrow", "ladder", "cables_wiring",
-  "unstable_structure", "exposed_wiring", "falling_debris", "fire_risk", "oil_spill"
-]
