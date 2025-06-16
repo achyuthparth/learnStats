@@ -1,0 +1,10 @@
+path: E:/yolo_project/mined  # Change to your dataset path
+train: train/images
+val: val/images
+nc: 28  # Number of classes (your construction categories)
+names: ["construction crane", "bulldozer", "forklift", "excavator", "cement mixer",
+        "dump truck", "backhoe", "loader", "paver", "hard hat", "safety vest",
+        "safety goggles", "gloves", "boots", "harness", "respirator mask",
+        "scaffolding", "barricade", "traffic cone", "construction sign",
+        "wheelbarrow", "ladder", "cables wiring", "unstable structure",
+        "exposed wiring", "falling debris", "fire risk", "oil spill"]
