@@ -3,21 +3,22 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3.13.3
-  - pip=25.1.1
+  - python=3.11
+  - pip
   - numpy
   - pandas
   - scikit-learn
   - opencv
-  - torch
+  - pytorch
   - torchvision
   - torchaudio
-  - ultralytics
-  - lxml
   - matplotlib
   - jupyter
   - tqdm
+  - lxml
+  - ultralytics
   - pip:
+      - cvat-cli
       - accelerate==1.7.0
       - transformers==4.52.4
       - huggingface-hub==0.32.4
@@ -28,4 +29,3 @@ dependencies:
       - requests==2.32.3
       - seaborn
       - flask
-      - cvat-cli
