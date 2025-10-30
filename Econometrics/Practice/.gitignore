@@ -1,0 +1,59 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# Data files (datasets can be large, re-download as needed)
+data/*.xls
+data/*.xlsx
+data/*.dta
+data/*.csv
+# Keep the data directory structure and .txt description files
+!data/.gitkeep
+!data/*.txt
+
+# Output files
+outputs/*.png
+outputs/*.jpg
+outputs/*.pdf
+outputs/*.html
+!outputs/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Environment variables
+.env
+.env.local
+
+# OS
+Thumbs.db
+*.log
