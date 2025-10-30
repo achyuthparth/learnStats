@@ -5,6 +5,8 @@ Utility package for Wooldridge Econometrics exercises
 from .econometrics_utils import (
     # Data loading
     load_wooldridge_data,
+    download_wooldridge_data,
+    load_wooldridge_data_with_download,
     get_dataset_info,
     
     # Regression
@@ -33,6 +35,8 @@ from .econometrics_utils import (
 
 __all__ = [
     'load_wooldridge_data',
+    'download_wooldridge_data',
+    'load_wooldridge_data_with_download',
     'get_dataset_info',
     'run_ols',
     'run_ols_formula',

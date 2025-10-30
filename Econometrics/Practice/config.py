@@ -11,8 +11,8 @@ NOTEBOOKS_DIR = BASE_DIR / "notebooks"
 OUTPUTS_DIR = BASE_DIR / "outputs"
 
 # Dataset URLs
-DATASET_BASE_URL = "https://faculty.utrgv.edu/diego.escobari/teaching"
-DATASET_INFO_URL = f"{DATASET_BASE_URL}/Datasets.html"
+DATASET_BASE_URL = "https://faculty.utrgv.edu/diego.escobari/teaching/Datasets"
+DATASET_INFO_URL = "https://faculty.utrgv.edu/diego.escobari/teaching/Datasets.html"
 
 # Plotting settings
 PLOT_CONFIG = {

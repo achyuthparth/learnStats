@@ -85,7 +85,8 @@ def to_cpu(data):
 def load_wooldridge_data(
     dataset_name: str,
     data_dir: Path = DATA_DIR,
-    use_gpu: bool = False
+    use_gpu: bool = False,
+    auto_download: bool = True
 ) -> pd.DataFrame:
     """
     Load a Wooldridge dataset from local storage or download if needed.
@@ -98,6 +99,8 @@ def load_wooldridge_data(
         Directory where datasets are stored
     use_gpu : bool
         Whether to return GPU-accelerated DataFrame (cuDF)
+    auto_download : bool
+        Whether to automatically download if file not found
     
     Returns:
     --------
@@ -109,6 +112,18 @@ def load_wooldridge_data(
     >>> df = load_wooldridge_data('wage1')
     >>> print(df.head())
     """
+    
+    # Define column names for datasets that don't have headers
+    column_mappings = {
+        'wage1': ['wage', 'educ', 'exper', 'tenure', 'nonwhite', 'female', 'married', 
+                  'numdep', 'smsa', 'northcen', 'south', 'west', 'construc', 'ndurman', 
+                  'trcommpu', 'trade', 'services', 'profserv', 'profocc', 'clerocc', 
+                  'servocc', 'lwage', 'expersq', 'tenursq'],
+        'bwght': ['faminc', 'cigtax', 'cigprice', 'bwght', 'fatheduc', 'motheduc', 
+                  'parity', 'male', 'white', 'cigs', 'lbwght', 'bwghtlbs', 'packs', 
+                  'lfaminc']
+    }
+    
     # Try different extensions
     extensions = ['.xls', '.xlsx', '.dta', '.csv']
     
@@ -116,7 +131,17 @@ def load_wooldridge_data(
         file_path = data_dir / f"{dataset_name}{ext}"
         if file_path.exists():
             if ext in ['.xls', '.xlsx']:
-                df = pd.read_excel(file_path)
+                df = pd.read_excel(file_path, header=None)  # Read without headers first
+                # Apply column names if we have them
+                if dataset_name.lower() in column_mappings:
+                    expected_cols = len(column_mappings[dataset_name.lower()])
+                    if len(df.columns) == expected_cols:
+                        df.columns = column_mappings[dataset_name.lower()]
+                    else:
+                        print(f"Warning: Expected {expected_cols} columns but found {len(df.columns)}")
+                        df = pd.read_excel(file_path, header=0)  # Fallback to using first row as headers
+                else:
+                    df = pd.read_excel(file_path, header=0)  # Use first row as headers for unknown datasets
             elif ext == '.dta':
                 df = pd.read_stata(file_path)
             elif ext == '.csv':
@@ -129,13 +154,153 @@ def load_wooldridge_data(
                 return to_gpu(df)
             return df
     
-    # If file not found, provide download instructions
+    # If file not found, try to download if auto_download is True
+    if auto_download:
+        print(f"Dataset '{dataset_name}' not found. Attempting to download...")
+        
+        import urllib.request
+        from urllib.error import URLError
+        
+        # Ensure data directory exists
+        data_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Download the file
+        download_url = f"{DATASET_BASE_URL}/{dataset_name.upper()}.xls"
+        file_path = data_dir / f"{dataset_name}.xls"
+        
+        try:
+            print(f"Downloading {dataset_name} from {download_url}...")
+            urllib.request.urlretrieve(download_url, file_path)
+            print(f"Successfully downloaded to {file_path}")
+            
+            # Now load the downloaded file
+            df = pd.read_excel(file_path, header=None)  # Read without headers first
+            # Apply column names if we have them
+            if dataset_name.lower() in column_mappings:
+                expected_cols = len(column_mappings[dataset_name.lower()])
+                if len(df.columns) == expected_cols:
+                    df.columns = column_mappings[dataset_name.lower()]
+                else:
+                    print(f"Warning: Expected {expected_cols} columns but found {len(df.columns)}")
+                    df = pd.read_excel(file_path, header=0)  # Fallback
+            else:
+                df = pd.read_excel(file_path, header=0)  # Use first row as headers for unknown datasets
+                
+            print(f"Loaded {dataset_name} from {file_path}")
+            print(f"Shape: {df.shape}")
+            
+            if use_gpu and check_gpu_available():
+                return to_gpu(df)
+            return df
+            
+        except URLError as e:
+            print(f"Failed to download {dataset_name}: {e}")
+            download_url = f"{DATASET_BASE_URL}/{dataset_name.upper()}.xls"
+            raise FileNotFoundError(
+                f"Dataset '{dataset_name}' not found in {data_dir.resolve()}\n"
+                f"Auto-download failed. Please manually download from: {download_url}\n"
+                f"And save it to: {data_dir.resolve()}"
+            )
+    else:
+        # If auto_download is False, just raise the error
+        download_url = f"{DATASET_BASE_URL}/{dataset_name.upper()}.xls"
+        raise FileNotFoundError(
+            f"Dataset '{dataset_name}' not found in {data_dir.resolve()}\n"
+            f"Please download from: {download_url}\n"
+            f"And save it to: {data_dir.resolve()}"
+        )
+
+
+def download_wooldridge_data(
+    dataset_name: str,
+    data_dir: Path = DATA_DIR,
+    force_download: bool = False
+) -> bool:
+    """
+    Download a Wooldridge dataset from the web.
+    
+    Parameters:
+    -----------
+    dataset_name : str
+        Name of the dataset (without extension), e.g., 'wage1', 'hprice1'
+    data_dir : Path
+        Directory where datasets should be saved
+    force_download : bool
+        Whether to download even if file already exists
+    
+    Returns:
+    --------
+    bool
+        True if download was successful, False otherwise
+    
+    Example:
+    --------
+    >>> download_wooldridge_data('wage1')
+    >>> df = load_wooldridge_data('wage1')
+    """
+    import urllib.request
+    from urllib.error import URLError
+    
+    # Ensure data directory exists
+    data_dir.mkdir(parents=True, exist_ok=True)
+    
+    # Check if file already exists
+    file_path = data_dir / f"{dataset_name}.xls"
+    if file_path.exists() and not force_download:
+        print(f"Dataset '{dataset_name}' already exists at {file_path}")
+        return True
+    
+    # Download the file
     download_url = f"{DATASET_BASE_URL}/{dataset_name}.xls"
-    raise FileNotFoundError(
-        f"Dataset '{dataset_name}' not found in {data_dir}\n"
-        f"Please download from: {download_url}\n"
-        f"And save it to: {data_dir}"
-    )
+    
+    try:
+        print(f"Downloading {dataset_name} from {download_url}...")
+        urllib.request.urlretrieve(download_url, file_path)
+        print(f"Successfully downloaded to {file_path}")
+        return True
+    except URLError as e:
+        print(f"Failed to download {dataset_name}: {e}")
+        print(f"Please manually download from: {download_url}")
+        print(f"And save it to: {file_path}")
+        return False
+
+
+def load_wooldridge_data_with_download(
+    dataset_name: str,
+    data_dir: Path = DATA_DIR,
+    use_gpu: bool = False,
+    auto_download: bool = True
+) -> pd.DataFrame:
+    """
+    Load a Wooldridge dataset, downloading it first if needed.
+    
+    Parameters:
+    -----------
+    dataset_name : str
+        Name of the dataset (without extension)
+    data_dir : Path
+        Directory where datasets are stored
+    use_gpu : bool
+        Whether to return GPU-accelerated DataFrame
+    auto_download : bool
+        Whether to automatically download if file not found
+    
+    Returns:
+    --------
+    pd.DataFrame or cudf.DataFrame
+        Loaded dataset
+    """
+    try:
+        return load_wooldridge_data(dataset_name, data_dir, use_gpu)
+    except FileNotFoundError:
+        if auto_download:
+            print(f"Dataset '{dataset_name}' not found. Attempting to download...")
+            if download_wooldridge_data(dataset_name, data_dir):
+                return load_wooldridge_data(dataset_name, data_dir, use_gpu)
+            else:
+                raise
+        else:
+            raise
 
 
 def get_dataset_info(dataset_name: str) -> str:
