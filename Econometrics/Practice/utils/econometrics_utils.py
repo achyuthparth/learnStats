@@ -16,6 +16,7 @@ import seaborn as sns
 from pathlib import Path
 from typing import Union, List, Optional, Tuple, Dict
 import warnings
+import json
 from scipy import stats
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
@@ -82,14 +83,164 @@ def to_cpu(data):
 # Data Loading Functions
 # ============================================================================
 
+# ============================================================================
+# Data Loading Functions
+# ============================================================================
+
+def load_column_mappings() -> Dict:
+    """
+    Load column mappings from JSON file.
+    
+    Returns:
+    --------
+    dict
+        Dictionary containing column mappings for all datasets
+    """
+    mappings_file = DATA_DIR / 'column_mappings.json'
+    with open(mappings_file, 'r') as f:
+        return json.load(f)
+
+
+def get_pandas_dtype(type_str: str):
+    """
+    Convert our type strings to pandas dtypes.
+    
+    Parameters:
+    -----------
+    type_str : str
+        Type string from column mappings
+        
+    Returns:
+    --------
+    pandas dtype
+    """
+    type_mapping = {
+        'integer': 'float64',    # Use float64 to handle missing values
+        'float': 'float64',
+        'boolean': 'boolean',    # Nullable boolean
+        'string': 'string'
+    }
+    return type_mapping.get(type_str, 'object')
+
+
+def convert_excel_to_clean_csv(dataset_name: str, data_dir: Path = DATA_DIR, force_convert: bool = False) -> bool:
+    """
+    Convert Excel file to clean CSV with proper data types.
+    
+    Parameters:
+    -----------
+    dataset_name : str
+        Name of the dataset
+    data_dir : Path
+        Directory containing the data files
+    force_convert : bool
+        Whether to reconvert even if CSV already exists
+        
+    Returns:
+    --------
+    bool
+        True if conversion successful
+    """
+    excel_file = data_dir / f"{dataset_name}.xls"
+    csv_file = data_dir / f"{dataset_name}_clean.csv"
+    
+    # Check if conversion needed
+    if csv_file.exists() and not force_convert:
+        print(f"Clean CSV already exists: {csv_file}")
+        return True
+    
+    if not excel_file.exists():
+        print(f"Excel file not found: {excel_file}")
+        return False
+    
+    try:
+        # Load column mappings
+        mappings = load_column_mappings()
+        if dataset_name not in mappings:
+            print(f"No column mappings found for dataset: {dataset_name}")
+            return False
+        
+        dataset_meta = mappings[dataset_name]
+        
+        # Step 1: Read Excel file as strings to preserve original values
+        print(f"Converting {excel_file} to clean CSV...")
+        df = pd.read_excel(excel_file, header=None, dtype=str)
+        
+        # Step 2: Assign column names
+        expected_cols = len(dataset_meta['columns'])
+        if len(df.columns) == expected_cols:
+            df.columns = list(dataset_meta['columns'].keys())
+        else:
+            print(f"Warning: Expected {expected_cols} columns, found {len(df.columns)}")
+            # Try reading with header
+            df = pd.read_excel(excel_file, header=0, dtype=str)
+        
+        # Step 3: Convert data types based on metadata
+        for col, meta in dataset_meta['columns'].items():
+            if col in df.columns:
+                if meta['type'] in ['integer', 'float']:
+                    # Convert to numeric, empty strings become NaN
+                    df[col] = pd.to_numeric(df[col], errors='coerce')
+                    # Keep as float64 to avoid casting issues with missing values
+                elif meta['type'] == 'boolean':
+                    # Convert to numeric then boolean
+                    df[col] = pd.to_numeric(df[col], errors='coerce').astype('boolean')
+        
+        # Step 4: Save as clean CSV
+        df.to_csv(csv_file, index=False)
+        print(f"Successfully converted to: {csv_file}")
+        return True
+        
+    except Exception as e:
+        print(f"Error converting {excel_file}: {e}")
+        return False
+
+
+def apply_dataset_cleaning_rules(df: pd.DataFrame, dataset_name: str, missing_value_rules: dict) -> pd.DataFrame:
+    """
+    Apply dataset-specific cleaning rules to handle missing values and data quality issues.
+    
+    Parameters:
+    -----------
+    df : pd.DataFrame
+        The loaded dataframe
+    dataset_name : str
+        Name of the dataset
+    missing_value_rules : dict
+        Dictionary containing cleaning rules for each dataset
+    
+    Returns:
+    --------
+    pd.DataFrame
+        Cleaned dataframe
+    """
+    if dataset_name.lower() not in missing_value_rules:
+        return df
+    
+    df_cleaned = df.copy()
+    rules = missing_value_rules[dataset_name.lower()]
+    
+    for column, column_rules in rules.items():
+        if column in df_cleaned.columns:
+            if column_rules.get('replace_zeros_with_nan', False):
+                # Replace zeros with NaN for this column
+                zeros_count = (df_cleaned[column] == 0).sum()
+                if zeros_count > 0:
+                    print(f"Replacing {zeros_count} zero values with NaN in column '{column}'")
+                    df_cleaned[column] = df_cleaned[column].replace(0, np.nan)
+    
+    return df_cleaned
+
+
 def load_wooldridge_data(
     dataset_name: str,
     data_dir: Path = DATA_DIR,
     use_gpu: bool = False,
-    auto_download: bool = True
+    auto_download: bool = True,
+    force_download: bool = False
 ) -> pd.DataFrame:
     """
-    Load a Wooldridge dataset from local storage or download if needed.
+    Load a Wooldridge dataset using CSV files with metadata.
     
     Parameters:
     -----------
@@ -101,6 +252,8 @@ def load_wooldridge_data(
         Whether to return GPU-accelerated DataFrame (cuDF)
     auto_download : bool
         Whether to automatically download if file not found
+    force_download : bool
+        Whether to force redownload of the dataset
     
     Returns:
     --------
@@ -113,6 +266,52 @@ def load_wooldridge_data(
     >>> print(df.head())
     """
     
+    csv_file = data_dir / f"{dataset_name}.csv"
+    
+    # Step 1: Check if CSV exists, if not try to download
+    if not csv_file.exists() or force_download:
+        if auto_download:
+            print(f"CSV file not found for {dataset_name}. Downloading...")
+            if not download_wooldridge_data(dataset_name, data_dir, force_download):
+                raise FileNotFoundError(f"Could not download {dataset_name}")
+        else:
+            raise FileNotFoundError(f"CSV file not found: {csv_file}")
+    
+    # Step 2: Load CSV with proper dtypes
+    try:
+        mappings = load_column_mappings()
+        if dataset_name in mappings:
+            dataset_meta = mappings[dataset_name]
+            dtypes = {col: get_pandas_dtype(meta['type']) 
+                     for col, meta in dataset_meta['columns'].items()}
+        else:
+            dtypes = None
+            print(f"Warning: No column mappings found for {dataset_name}")
+        
+        df = pd.read_csv(csv_file, dtype=dtypes)
+        
+        print(f"Loaded {dataset_name} from {csv_file}")
+        print(f"Shape: {df.shape}")
+        
+        if use_gpu and check_gpu_available():
+            return to_gpu(df)
+        return df
+        
+    except Exception as e:
+        print(f"Error loading CSV {csv_file}: {e}")
+        raise
+
+
+def load_wooldridge_data_legacy(
+    dataset_name: str,
+    data_dir: Path = DATA_DIR,
+    use_gpu: bool = False,
+    auto_download: bool = True
+) -> pd.DataFrame:
+    """
+    Legacy Excel-based data loading (kept for fallback).
+    """
+    
     # Define column names for datasets that don't have headers
     column_mappings = {
         'wage1': ['wage', 'educ', 'exper', 'tenure', 'nonwhite', 'female', 'married', 
@@ -121,7 +320,17 @@ def load_wooldridge_data(
                   'servocc', 'lwage', 'expersq', 'tenursq'],
         'bwght': ['faminc', 'cigtax', 'cigprice', 'bwght', 'fatheduc', 'motheduc', 
                   'parity', 'male', 'white', 'cigs', 'lbwght', 'bwghtlbs', 'packs', 
-                  'lfaminc']
+                  'lfaminc'],
+        'meap01': ['dcode', 'bcode', 'math4', 'read4', 'lunch', 'enroll', 'expend',
+                   'exppp', 'lenroll', 'lexpend', 'lexppp']
+    }
+    
+    # Define dataset-specific cleaning rules for missing values
+    missing_value_rules = {
+        'bwght': {
+            'fatheduc': {'replace_zeros_with_nan': True},  # Zero years of education should be NaN
+            'motheduc': {'replace_zeros_with_nan': True}   # Zero years of education should be NaN
+        }
     }
     
     # Try different extensions
@@ -149,6 +358,9 @@ def load_wooldridge_data(
             
             print(f"Loaded {dataset_name} from {file_path}")
             print(f"Shape: {df.shape}")
+            
+            # Apply dataset-specific cleaning rules
+            df = apply_dataset_cleaning_rules(df, dataset_name, missing_value_rules)
             
             if use_gpu and check_gpu_available():
                 return to_gpu(df)
@@ -189,6 +401,9 @@ def load_wooldridge_data(
             print(f"Loaded {dataset_name} from {file_path}")
             print(f"Shape: {df.shape}")
             
+            # Apply dataset-specific cleaning rules
+            df = apply_dataset_cleaning_rules(df, dataset_name, missing_value_rules)
+            
             if use_gpu and check_gpu_available():
                 return to_gpu(df)
             return df
@@ -217,7 +432,7 @@ def download_wooldridge_data(
     force_download: bool = False
 ) -> bool:
     """
-    Download a Wooldridge dataset from the web.
+    Download a Wooldridge dataset from the web and save as CSV.
     
     Parameters:
     -----------
@@ -240,28 +455,72 @@ def download_wooldridge_data(
     """
     import urllib.request
     from urllib.error import URLError
+    import tempfile
     
     # Ensure data directory exists
     data_dir.mkdir(parents=True, exist_ok=True)
     
-    # Check if file already exists
-    file_path = data_dir / f"{dataset_name}.xls"
-    if file_path.exists() and not force_download:
-        print(f"Dataset '{dataset_name}' already exists at {file_path}")
+    # Check if clean CSV already exists
+    csv_file = data_dir / f"{dataset_name}.csv"
+    if csv_file.exists() and not force_download:
+        print(f"Dataset '{dataset_name}' already exists at {csv_file}")
         return True
     
-    # Download the file
-    download_url = f"{DATASET_BASE_URL}/{dataset_name}.xls"
+    # Download to temporary Excel file first
+    download_url = f"{DATASET_BASE_URL}/{dataset_name.upper()}.xls"
     
     try:
         print(f"Downloading {dataset_name} from {download_url}...")
-        urllib.request.urlretrieve(download_url, file_path)
-        print(f"Successfully downloaded to {file_path}")
+        
+        # Create temporary file for Excel data
+        with tempfile.NamedTemporaryFile(suffix='.xls', delete=False) as temp_file:
+            urllib.request.urlretrieve(download_url, temp_file.name)
+            temp_excel_path = temp_file.name
+        
+        # Load column mappings
+        mappings = load_column_mappings()
+        if dataset_name not in mappings:
+            print(f"Warning: No column mappings found for {dataset_name}")
+            # Save as basic CSV without type conversion
+            df = pd.read_excel(temp_excel_path, header=None)
+            df.to_csv(csv_file, index=False)
+        else:
+            # Convert with proper types
+            dataset_meta = mappings[dataset_name]
+            df = pd.read_excel(temp_excel_path, header=None, dtype=str)
+            
+            # Assign column names
+            expected_cols = len(dataset_meta['columns'])
+            if len(df.columns) == expected_cols:
+                df.columns = list(dataset_meta['columns'].keys())
+            else:
+                print(f"Warning: Expected {expected_cols} columns, found {len(df.columns)}")
+            
+            # Convert data types
+            for col, meta in dataset_meta['columns'].items():
+                if col in df.columns:
+                    if meta['type'] in ['integer', 'float']:
+                        df[col] = pd.to_numeric(df[col], errors='coerce')
+                        if meta['type'] == 'integer':
+                            df[col] = df[col].astype('Int64')
+                    elif meta['type'] == 'boolean':
+                        df[col] = pd.to_numeric(df[col], errors='coerce').astype('boolean')
+            
+            # Save as CSV
+            df.to_csv(csv_file, index=False)
+        
+        # Clean up temporary file
+        Path(temp_excel_path).unlink()
+        
+        print(f"Successfully downloaded and converted to: {csv_file}")
         return True
+        
     except URLError as e:
         print(f"Failed to download {dataset_name}: {e}")
         print(f"Please manually download from: {download_url}")
-        print(f"And save it to: {file_path}")
+        return False
+    except Exception as e:
+        print(f"Error processing {dataset_name}: {e}")
         return False
 
 

@@ -1,0 +1,117 @@
+{
+  "wage1": {
+    "columns": {
+      "wage": {"type": "float", "description": "average hourly earnings"},
+      "educ": {"type": "float", "description": "years of education"},
+      "exper": {"type": "float", "description": "years potential experience"},
+      "tenure": {"type": "float", "description": "years with current employer"},
+      "nonwhite": {"type": "boolean", "description": "=1 if nonwhite"},
+      "female": {"type": "boolean", "description": "=1 if female"},
+      "married": {"type": "boolean", "description": "=1 if married"},
+      "numdep": {"type": "float", "description": "number of dependents"},
+      "smsa": {"type": "boolean", "description": "=1 if live in SMSA"},
+      "northcen": {"type": "boolean", "description": "=1 if live in north central U.S"},
+      "south": {"type": "boolean", "description": "=1 if live in southern region"},
+      "west": {"type": "boolean", "description": "=1 if live in western region"},
+      "construc": {"type": "boolean", "description": "=1 if work in construction"},
+      "ndurman": {"type": "boolean", "description": "=1 in nondur. manuf."},
+      "trcommpu": {"type": "boolean", "description": "=1 if in trans, commun, pub util"},
+      "trade": {"type": "boolean", "description": "=1 if in wholesale or retail"},
+      "services": {"type": "boolean", "description": "=1 if in services"},
+      "profserv": {"type": "boolean", "description": "=1 if in prof. serv."},
+      "profocc": {"type": "boolean", "description": "=1 if in profess. occupation"},
+      "clerocc": {"type": "boolean", "description": "=1 if in clerical occupation"},
+      "servocc": {"type": "boolean", "description": "=1 if in service occupation"},
+      "lwage": {"type": "float", "description": "log(wage)"},
+      "expersq": {"type": "float", "description": "exper^2"},
+      "tenursq": {"type": "float", "description": "tenure^2"}
+    }
+  },
+  "bwght": {
+    "columns": {
+      "faminc": {"type": "float", "description": "1988 family income, $1000s"},
+      "cigtax": {"type": "float", "description": "cig. tax in home state, 1988"},
+      "cigprice": {"type": "float", "description": "cig. price in home state, 1988"},
+      "bwght": {"type": "float", "description": "birth weight, ounces"},
+      "fatheduc": {"type": "float", "description": "father's yrs of educ"},
+      "motheduc": {"type": "float", "description": "mother's yrs of educ"},
+      "parity": {"type": "float", "description": "birth order of child"},
+      "male": {"type": "boolean", "description": "=1 if male child"},
+      "white": {"type": "boolean", "description": "=1 if white"},
+      "cigs": {"type": "float", "description": "cigs smked per day while preg"},
+      "lbwght": {"type": "float", "description": "log(bwght)"},
+      "bwghtlbs": {"type": "float", "description": "birth weight, pounds"},
+      "packs": {"type": "float", "description": "packs smked per day while preg"},
+      "lfaminc": {"type": "float", "description": "log(faminc)"}
+    }
+  },
+  "meap01": {
+    "columns": {
+      "dcode": {"type": "float", "description": "district code"},
+      "bcode": {"type": "float", "description": "building code"},
+      "math4": {"type": "float", "description": "% students satisfactory, 4th grade math"},
+      "read4": {"type": "float", "description": "% students satisfactory, 4th grade reading"},
+      "lunch": {"type": "float", "description": "% students eligible for free or reduced lunch"},
+      "enroll": {"type": "float", "description": "school enrollment"},
+      "expend": {"type": "float", "description": "total spending, $"},
+      "exppp": {"type": "float", "description": "expenditures per pupil: expend/enroll"},
+      "lenroll": {"type": "float", "description": "log(enroll)"},
+      "lexpend": {"type": "float", "description": "log(expend)"},
+      "lexppp": {"type": "float", "description": "log(exppp)"}
+    }
+  },
+  "fertil2": {
+    "columns": {
+      "mnthborn": {"type": "float", "description": "month woman born"},
+      "yearborn": {"type": "float", "description": "year woman born"},
+      "age": {"type": "float", "description": "age in years"},
+      "electric": {"type": "boolean", "description": "=1 if has electricity"},
+      "radio": {"type": "boolean", "description": "=1 if has radio"},
+      "tv": {"type": "boolean", "description": "=1 if has tv"},
+      "bicycle": {"type": "boolean", "description": "=1 if has bicycle"},
+      "educ": {"type": "float", "description": "years of education"},
+      "ceb": {"type": "float", "description": "children ever born"},
+      "agefbrth": {"type": "float", "description": "age at first birth"},
+      "children": {"type": "float", "description": "number of living children"},
+      "knowmeth": {"type": "boolean", "description": "=1 if know about birth control"},
+      "usemeth": {"type": "boolean", "description": "=1 if ever use birth control"},
+      "monthfm": {"type": "float", "description": "month of first marriage"},
+      "yearfm": {"type": "float", "description": "year of first marriage"},
+      "agefm": {"type": "float", "description": "age at first marriage"},
+      "idlnchld": {"type": "float", "description": "'ideal' number of children"},
+      "heduc": {"type": "float", "description": "husband's years of education"},
+      "agesq": {"type": "float", "description": "age^2"},
+      "urban": {"type": "boolean", "description": "=1 if live in urban area"},
+      "urbeduc": {"type": "float", "description": "urban*educ"},
+      "spirit": {"type": "boolean", "description": "=1 if religion == spirit"},
+      "protest": {"type": "boolean", "description": "=1 if religion == protestant"},
+      "catholic": {"type": "boolean", "description": "=1 if religion == catholic"},
+      "frsthalf": {"type": "boolean", "description": "=1 if mnthborn <= 6"},
+      "educ0": {"type": "boolean", "description": "=1 if educ == 0"},
+      "evermarr": {"type": "boolean", "description": "=1 if ever married"}
+    }
+  },
+  "jtrain2": {
+    "columns": {
+      "train": {"type": "boolean", "description": "=1 if assigned to job training"},
+      "age": {"type": "float", "description": "age in 1977"},
+      "educ": {"type": "float", "description": "years of education"},
+      "black": {"type": "boolean", "description": "=1 if black"},
+      "hisp": {"type": "boolean", "description": "=1 if Hispanic"},
+      "married": {"type": "boolean", "description": "=1 if married"},
+      "nodegree": {"type": "boolean", "description": "=1 if no high school degree"},
+      "mosinex": {"type": "float", "description": "# mnths prior to 1/78 in expmnt"},
+      "re74": {"type": "float", "description": "real earns., 1974, $1000s"},
+      "re75": {"type": "float", "description": "real earns., 1975, $1000s"},
+      "re78": {"type": "float", "description": "real earns., 1978, $1000s"},
+      "unem74": {"type": "boolean", "description": "=1 if unem. all of 1974"},
+      "unem75": {"type": "boolean", "description": "=1 if unem. all of 1975"},
+      "unem78": {"type": "boolean", "description": "=1 if unem. all of 1978"},
+      "lre74": {"type": "float", "description": "log(re74); zero if re74 == 0"},
+      "lre75": {"type": "float", "description": "log(re75); zero if re75 == 0"},
+      "lre78": {"type": "float", "description": "log(re78); zero if re78 == 0"},
+      "agesq": {"type": "float", "description": "age^2"},
+      "mostrn": {"type": "float", "description": "months of training"}
+    }
+  }
+}
