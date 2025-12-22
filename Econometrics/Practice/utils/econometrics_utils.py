@@ -117,7 +117,7 @@ def get_pandas_dtype(type_str: str):
     type_mapping = {
         'integer': 'float64',    # Use float64 to handle missing values
         'float': 'float64',
-        'boolean': 'boolean',    # Nullable boolean
+        'boolean': 'boolean',    # Pandas nullable boolean
         'string': 'string'
     }
     return type_mapping.get(type_str, 'object')
@@ -183,8 +183,8 @@ def convert_excel_to_clean_csv(dataset_name: str, data_dir: Path = DATA_DIR, for
                     df[col] = pd.to_numeric(df[col], errors='coerce')
                     # Keep as float64 to avoid casting issues with missing values
                 elif meta['type'] == 'boolean':
-                    # Convert to numeric then boolean
-                    df[col] = pd.to_numeric(df[col], errors='coerce').astype('boolean')
+                    # Convert 0/1 to boolean, handling NaN properly
+                    df[col] = df[col].astype('boolean')
         
         # Step 4: Save as clean CSV
         df.to_csv(csv_file, index=False)
@@ -504,7 +504,8 @@ def download_wooldridge_data(
                         if meta['type'] == 'integer':
                             df[col] = df[col].astype('Int64')
                     elif meta['type'] == 'boolean':
-                        df[col] = pd.to_numeric(df[col], errors='coerce').astype('boolean')
+                        # Convert 0/1 to boolean, handling NaN properly
+                        df[col] = df[col].astype('boolean')
             
             # Save as CSV
             df.to_csv(csv_file, index=False)
