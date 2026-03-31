@@ -1,3 +1,19 @@
+import requests
+from io import BytesIO
+def to_bool_like(val):
+    """
+    Robustly convert Excel bool-like values to Python bool or pd.NA.
+    Accepts: 1, 0, '1', '0', 'TRUE', 'FALSE', 'Yes', 'No', True, False, etc.
+    Returns: True, False, or pd.NA
+    """
+    if pd.isna(val):
+        return pd.NA
+    sval = str(val).strip().lower()
+    if sval in ['1', 'true', 'yes', 'y', 't']:
+        return True
+    if sval in ['0', 'false', 'no', 'n', 'f']:
+        return False
+    return pd.NA
 """
 Econometrics Utility Functions for Wooldridge Exercises
 
@@ -141,31 +157,44 @@ def convert_excel_to_clean_csv(dataset_name: str, data_dir: Path = DATA_DIR, for
     bool
         True if conversion successful
     """
+
     excel_file = data_dir / f"{dataset_name}.xls"
-    csv_file = data_dir / f"{dataset_name}_clean.csv"
-    
+    parquet_file = data_dir / f"{dataset_name}_compute.parquet"
+
     # Check if conversion needed
-    if csv_file.exists() and not force_convert:
-        print(f"Clean CSV already exists: {csv_file}")
+    if parquet_file.exists() and not force_convert:
+        print(f"Compute Parquet already exists: {parquet_file}")
         return True
-    
-    if not excel_file.exists():
-        print(f"Excel file not found: {excel_file}")
-        return False
-    
+
+    # Try to load Excel from disk, else download in memory
+    if excel_file.exists():
+        print(f"Reading Excel from disk: {excel_file}")
+        excel_source = excel_file
+        read_excel = lambda **kwargs: pd.read_excel(excel_file, **kwargs)
+    else:
+        url = f"https://faculty.utrgv.edu/diego.escobari/teaching/Datasets/{dataset_name.upper()}.xls"
+        print(f"Downloading Excel in memory from {url}")
+        resp = requests.get(url)
+        if resp.status_code != 200:
+            print(f"Failed to download Excel for {dataset_name}")
+            return False
+        excel_bytes = BytesIO(resp.content)
+        excel_source = excel_bytes
+        read_excel = lambda **kwargs: pd.read_excel(excel_bytes, **kwargs)
+
     try:
         # Load column mappings
         mappings = load_column_mappings()
         if dataset_name not in mappings:
             print(f"No column mappings found for dataset: {dataset_name}")
             return False
-        
+
         dataset_meta = mappings[dataset_name]
-        
+
         # Step 1: Read Excel file as strings to preserve original values
-        print(f"Converting {excel_file} to clean CSV...")
-        df = pd.read_excel(excel_file, header=None, dtype=str)
-        
+        print(f"Converting {dataset_name} Excel to compute Parquet...")
+        df = read_excel(header=None, dtype=str)
+
         # Step 2: Assign column names
         expected_cols = len(dataset_meta['columns'])
         if len(df.columns) == expected_cols:
@@ -173,27 +202,36 @@ def convert_excel_to_clean_csv(dataset_name: str, data_dir: Path = DATA_DIR, for
         else:
             print(f"Warning: Expected {expected_cols} columns, found {len(df.columns)}")
             # Try reading with header
-            df = pd.read_excel(excel_file, header=0, dtype=str)
-        
+            df = read_excel(header=0, dtype=str)
+
         # Step 3: Convert data types based on metadata
         for col, meta in dataset_meta['columns'].items():
             if col in df.columns:
                 if meta['type'] in ['integer', 'float']:
                     # Convert to numeric, empty strings become NaN
                     df[col] = pd.to_numeric(df[col], errors='coerce')
-                    # Keep as float64 to avoid casting issues with missing values
                 elif meta['type'] == 'boolean':
-                    # Convert 0/1 to boolean, handling NaN properly
-                    df[col] = df[col].astype('boolean')
-        
-        # Step 4: Save as clean CSV
-        df.to_csv(csv_file, index=False)
-        print(f"Successfully converted to: {csv_file}")
+                    # Debug: print unique values before conversion
+                    print(f"[DEBUG] Unique values in boolean column '{col}' before conversion:", df[col].unique())
+                    # Always use robust bool-like conversion, even for 0/1
+                    df[col] = df[col].apply(to_bool_like).astype('boolean')
+
+        # Step 4: Save as compute Parquet
+        df.to_parquet(parquet_file, index=False)
+        print(f"Successfully converted to: {parquet_file}")
         return True
-        
+
     except Exception as e:
         print(f"Error converting {excel_file}: {e}")
         return False
+def load_compute_parquet(dataset_name: str, data_dir: Path = DATA_DIR) -> pd.DataFrame:
+    """
+    Load compute-ready Parquet file for a dataset.
+    """
+    parquet_file = data_dir / f"{dataset_name}_compute.parquet"
+    if not parquet_file.exists():
+        raise FileNotFoundError(f"Compute Parquet not found: {parquet_file}")
+    return pd.read_parquet(parquet_file)
 
 
 def apply_dataset_cleaning_rules(df: pd.DataFrame, dataset_name: str, missing_value_rules: dict) -> pd.DataFrame:
@@ -266,39 +304,30 @@ def load_wooldridge_data(
     >>> print(df.head())
     """
     
-    csv_file = data_dir / f"{dataset_name}.csv"
-    
-    # Step 1: Check if CSV exists, if not try to download
-    if not csv_file.exists() or force_download:
+    parquet_file = data_dir / f"{dataset_name}_compute.parquet"
+
+    # Step 1: Check if Parquet exists, if not try to download and convert
+    if not parquet_file.exists() or force_download:
         if auto_download:
-            print(f"CSV file not found for {dataset_name}. Downloading...")
+            print(f"Compute Parquet file not found for {dataset_name}. Downloading and converting...")
             if not download_wooldridge_data(dataset_name, data_dir, force_download):
                 raise FileNotFoundError(f"Could not download {dataset_name}")
+            # After download, convert Excel to Parquet
+            if not convert_excel_to_clean_csv(dataset_name, data_dir, force_convert=True):
+                raise FileNotFoundError(f"Could not convert {dataset_name} to Parquet")
         else:
-            raise FileNotFoundError(f"CSV file not found: {csv_file}")
-    
-    # Step 2: Load CSV with proper dtypes
+            raise FileNotFoundError(f"Compute Parquet file not found: {parquet_file}")
+
+    # Step 2: Load Parquet
     try:
-        mappings = load_column_mappings()
-        if dataset_name in mappings:
-            dataset_meta = mappings[dataset_name]
-            dtypes = {col: get_pandas_dtype(meta['type']) 
-                     for col, meta in dataset_meta['columns'].items()}
-        else:
-            dtypes = None
-            print(f"Warning: No column mappings found for {dataset_name}")
-        
-        df = pd.read_csv(csv_file, dtype=dtypes)
-        
-        print(f"Loaded {dataset_name} from {csv_file}")
+        df = pd.read_parquet(parquet_file)
+        print(f"Loaded {dataset_name} from {parquet_file}")
         print(f"Shape: {df.shape}")
-        
         if use_gpu and check_gpu_available():
             return to_gpu(df)
         return df
-        
     except Exception as e:
-        print(f"Error loading CSV {csv_file}: {e}")
+        print(f"Error loading Parquet {parquet_file}: {e}")
         raise
 
 

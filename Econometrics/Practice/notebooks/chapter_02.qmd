@@ -1,0 +1,352 @@
+---
+title: "Chapter 2 - The Simple Regression Model"
+author: "Solutions to Wooldridge Computer Exercises"
+date: "last-modified: today"
+format:
+  html: default
+  pdf: default
+jupyter: python3
+---
+
+# Chapter 2 - The Simple Regression Model
+
+**Introductory Econometrics** by Jeffrey M. Wooldridge (5th Edition)
+
+---
+
+This document contains solutions to computer exercises from Chapter 2. These exercises focus on simple linear regression, OLS estimation, and interpreting regression results.
+
+## Setup
+
+```{python}
+#| echo: true
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
+
+import sys
+sys.path.append('..')
+from utils import (
+    load_wooldridge_data,
+    summary_statistics,
+    plot_correlation_matrix
+)
+
+pd.set_option('display.max_columns', None)
+pd.set_option('display.precision', 4)
+print("Setup complete!")
+```
+
+---
+
+## Computer Exercise C1: 401(k) Pension Plans
+
+**Problem Statement:**
+
+The data in 401K.RAW are a subset of data analyzed by Papke (1995) to study the relationship between participation in a 401(k) pension plan and the generosity of the plan. The variable prate is the percentage of eligible workers with an active account; this is the variable we would like to explain. The measure of generosity is the plan match rate, mrate. This variable gives the average amount the firm contributes to each worker's plan for each $1 contribution by the worker.
+
+(i) Find the average participation rate and the average match rate in the sample of plans.
+
+(ii) Now, estimate the simple regression equation prate = β₀ + β₁mrate, and report the results along with the sample size and R-squared.
+
+(iii) Interpret the intercept in your equation. Interpret the coefficient on mrate.
+
+(iv) Find the predicted prate when mrate = 3.5. Is this a reasonable prediction? Explain what is happening here.
+
+(v) How much of the variation in prate is explained by mrate? Is this a lot in your opinion?
+
+**Dataset:** 401k
+
+### Data Loading and Initial Exploration
+
+```{python}
+# Load the 401K dataset
+k401 = load_wooldridge_data('401k')
+
+print("401K Dataset Overview:")
+print(f"Shape: {k401.shape}")
+print(f"Columns: {list(k401.columns)}")
+print("\nFirst 5 rows:")
+print(k401.head())
+```
+
+### Part (i): Sample Averages
+
+```{python}
+# Find average participation rate and average match rate
+avg_participation = k401['prate'].mean()
+avg_match_rate = k401['mrate'].mean()
+print(f"Average Participation Rate: {avg_participation:.4f}")
+print(f"Average Match Rate: {avg_match_rate:.4f}")
+```
+
+### Part (ii): Simple Regression Estimation
+
+```{python}
+# Estimate prate = β₀ + β₁mrate
+X = sm.add_constant(k401['mrate'])
+y = k401['prate']
+model = sm.OLS(y, X).fit()
+print(model.summary())
+```
+
+### Part (iii): Interpretation of Coefficients
+
+The intercept at around 83% shows the expected participation rate at a 401k match rate of 0%. The coefficient 5.86 indicates that for every unit increase in match rate we see a unit increase of participation by 5.86%.
+
+### Part (iv): Prediction for mrate = 3.5
+
+```{python}
+# Predict prate when mrate = 3.5
+intercept = model.params[0]  # β₀
+slope = model.params[1]      # β₁
+mrate_value = 3.5
+predicted_prate = intercept + slope * mrate_value
+print(f"Estimated equation: prate = {intercept:.4f} + {slope:.4f} * mrate")
+print(f"When mrate = {mrate_value}:")
+print(f"Predicted prate = {intercept:.4f} + {slope:.4f} * {mrate_value} = {predicted_prate:.4f}")
+
+# Check if this is reasonable
+print(f"\nIs this reasonable?")
+print(f"- This predicts a participation rate of {predicted_prate:.1f}%")
+print(f"- Sample average participation rate: {k401['prate'].mean():.1f}%")
+print(f"- Sample range: {k401['prate'].min():.1f}% to {k401['prate'].max():.1f}%")
+if predicted_prate > 100:
+    print("- WARNING: Prediction exceeds 100%! This suggests extrapolation beyond reasonable range.")
+elif predicted_prate < 0:
+    print("- WARNING: Prediction is negative! This suggests extrapolation beyond reasonable range.")
+else:
+    print("- This prediction seems reasonable as it falls within a plausible range.")
+```
+
+I think this is an unreasonable prediction here. Percentage relationships are usually not well captured by standard linear models. I believe using log or log log models would be necessary here to show percentage increases within variables.
+
+### Part (v): Goodness of Fit Assessment
+
+```{python}
+# Assess how much variation is explained by mrate
+r_squared = model.rsquared
+print(f"\nR-squared: {r_squared:.4f}")
+```
+
+This significantly small r squared value shows that the match rate does not explain much of the participation rate's variance.
+
+---
+
+## Computer Exercise C2: CEO Salary and Tenure
+
+**Problem Statement:**
+
+The data set in CEOSAL2.RAW contains information on chief executive officers for U.S. corporations. The variable salary is annual compensation, in thousands of dollars, and ceoten is prior number of years as company CEO.
+
+
+**Dataset:** ceosal2
+
+### Data Loading and Initial Exploration
+
+```{python}
+# Load the CEOSAL2 dataset
+ceosal2 = load_wooldridge_data('ceosal2')
+
+print("CEOSAL2 Dataset Overview:")
+print(f"Shape: {ceosal2.shape}")
+print(f"Columns: {list(ceosal2.columns)}")
+print("\nFirst 5 rows:")
+print(ceosal2.head())
+```
+
+### Part (i): Find the average salary and the average tenure in the sample.
+```{python}
+# Find average salary and average tenure
+avg_salary = ceosal2['salary'].mean()
+avg_tenure = ceosal2['comten'].mean()
+print(f"Average Salary: {avg_salary:.2f}")
+print(f"Average Tenure: {avg_tenure:.2f}")
+```
+Average Salary: 865.86
+Average Tenure: 22.50
+### Part (ii): How many CEOs are in their first year as CEO (that is, ceoten = 0)? What is the longest tenure as a CEO?
+```{python}
+# Count first-year CEOs and find maximum tenure
+first_year_ceos = ceosal2[ceosal2['comten'] == 0].shape[0]
+max_tenure = ceosal2['comten'].max()
+print(f"Number of first-year CEOs: {first_year_ceos}")
+print(f"Maximum Tenure: {max_tenure}")
+```
+Number of first-year CEOs: 0
+Maximum Tenure: 58.0
+### Part (iii): Estimate the simple regression model log(salary) = β₀ + β₁ceoten + u, and report your results in the usual form. What is the (approximate) predicted percentage increase in salary given one more year as a CEO?
+```{python}
+# Estimate log(salary) = β₀ + β₁ceoten + u
+X = sm.add_constant(ceosal2['ceoten'])
+y = np.log(ceosal2['salary'])
+model_manual = sm.OLS(y, X).fit()
+print("=== MANUAL LOG TRANSFORMATION + OLS ===")
+print(model_manual.summary())
+
+# Extract coefficients for interpretation
+beta_0 = model_manual.params[0]
+beta_1 = model_manual.params[1]
+print(f"\n=== INTERPRETATION ===")
+print(f"Estimated equation: log(salary) = {beta_0:.4f} + {beta_1:.4f} * ceoten")
+print(f"Coefficient interpretation:")
+print(f"- β₁ = {beta_1:.4f} means a 1-year increase in CEO tenure increases salary by approximately {beta_1*100:.2f}%")
+print(f"- More precisely: %Δsalary ≈ 100 × β₁ × Δceoten for small changes")
+```
+=== INTERPRETATION ===
+Estimated equation: log(salary) = 6.5055 + 0.0097 * ceoten
+Coefficient interpretation:
+- β₁ = 0.0097 means a 1-year increase in CEO tenure increases salary by approximately 0.97%
+- More precisely: %Δsalary ≈ 100 × β₁ × Δceoten for small changes
+beta_0 = model_manual.params.iloc[0]
+beta_1 = model_manual.params.iloc[1]
+---
+
+## Computer Exercise C3: Sleep vs Work Tradeoff
+
+**Problem Statement:**
+
+Use the data in SLEEP75.RAW from Biddle and Hamermesh (1990) to study whether there is a tradeoff between the time spent sleeping per week and the time spent in paid work. We could use either variable as the dependent variable. For concreteness, estimate the model sleep = β₀ + β₁totwrk + u, where sleep is minutes spent sleeping at night per week and totwrk is total minutes worked during the week.
+
+**Dataset:** sleep75
+
+```{python}
+# Load the SLEEP75 dataset
+sleep75 = load_wooldridge_data('sleep75')
+print("SLEEP75 Dataset Overview:")
+print(f"Shape: {sleep75.shape}")
+print(f"Columns: {list(sleep75.columns)}")
+print("\nFirst 5 rows:")
+print(sleep75.head())
+```
+
+```{python}
+# Estimate sleep = β₀ + β₁totwrk + u
+X = sm.add_constant(sleep75['totwrk'])
+y = sleep75['sleep']
+model_sleep = sm.OLS(y, X).fit()
+print("=== SLEEP VS WORK TRADEOFF ===")
+print(model_sleep.summary())
+
+# Extract coefficients for interpretation
+beta_0 = model_sleep.params[0]
+beta_1 = model_sleep.params[1]
+print(f"\n=== INTERPRETATION ===")
+print(f"Estimated equation: sleep = {beta_0:.4f} + {beta_1:.4f} * totwrk")
+print(f"Coefficient interpretation:")
+print(f"- β₁ = {beta_1:.4f} means a 1-minute increase in total work decreases sleep by approximately {abs(beta_1):.2f} minutes")
+
+```
+
+### (i) Report your results in equation form along with the number of observations and R². What does the intercept in this equation mean?
+
+
+=== INTERPRETATION ===
+Estimated equation: sleep = 3586.3770 + -0.1507 * totwrk
+Coefficient interpretation:
+- β₁ = -0.1507 means a 1-minute increase in total work decreases sleep by approximately 0.15 minutes
+<ipython-input-4-d63beb048d16>:9: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  beta_0 = model_sleep.params.iloc[0]
+  beta_1 = model_sleep.params.iloc[1]
+
+The intercept of 3586.3770 means that if a person does not work at all (totwrk = 0), they are predicted to sleep for approximately 3586 minutes per week, which is about 8.3 hours per night.
+
+### (ii) If totwrk increases by 2 hours, by how much is sleep estimated to fall? Do you find this to be a large effect?
+
+If totwrk increases by 2 hours (which is 120 minutes), sleep is estimated to fall by:
+```{python}
+# Calculate the estimated decrease in sleep for a 2-hour increase in total work
+totwrk_increase = 2 * 60  # 2 hours in minutes
+sleep_decrease = beta_1 * totwrk_increase
+print(f"If totwrk increases by 2 hours, sleep is estimated to fall by {abs(sleep_decrease):.2f} minutes")
+```
+18.09 minutes. This is a moderate effect, suggesting that for every 2 hours of additional work, a person might lose about 18 minutes of sleep per week. 
+---
+
+## Computer Exercise C4: IQ and Wages
+
+**Problem Statement:**
+
+Use the data in WAGE2.RAW to estimate a simple regression explaining monthly salary (wage) in terms of IQ score (IQ).
+
+**Dataset:** wage2
+
+```{python}
+# Load the WAGE2 dataset
+wage2 = load_wooldridge_data('wage2')
+print("WAGE2 Dataset Overview:")
+print(f"Shape: {wage2.shape}")
+print(f"Columns: {list(wage2.columns)}")
+print("\nFirst 5 rows:")
+print(wage2.head())
+```
+
+
+### (i) Find the average salary and average IQ in the sample. What is the sample standard deviation of IQ? (IQ scores are standardized so that the average in the population is 100 with a standard deviation equal to 15.)
+```{python}
+avg_wage = wage2['wage'].mean()
+avg_iq = wage2['IQ'].mean()
+std_iq = wage2['IQ'].std()
+
+print(f"Average wage: {avg_wage:.2f}")
+print(f"Average IQ: {avg_iq:.2f}")
+print(f"Sample standard deviation of IQ: {std_iq:.2f}")
+```
+Average wage: 957.95
+Average IQ: 101.28
+Sample standard deviation of IQ: 15.05
+### (ii) Estimate a simple regression model where a one-point increase in IQ changes wage by a constant dollar amount. Use this model to find the predicted increase in wage for an increase in IQ of 15 points. Does IQ explain most of the variation in wage?
+```{python}
+X = sm.add_constant(wage2['IQ'])
+y = wage2['wage']
+model_wage = sm.OLS(y, X).fit()
+print("=== WAGE VS IQ ===")
+print(model_wage.summary())
+
+# Extract coefficients for interpretation
+beta_0 = model_wage.params[0]
+beta_1 = model_wage.params[1]
+print(f"\n=== INTERPRETATION ===")
+print(f"Estimated equation: wage = {beta_0:.2f} + {beta_1:.2f} * IQ")
+print(f"Coefficient interpretation:")
+print(f"- β₁ = {beta_1:.2f} means a 1-point increase in IQ increases wage by approximately ${beta_1:.2f}")
+
+# Predicted increase in wage for a 15-point increase in IQ
+iq_increase = 15
+wage_increase = beta_1 * iq_increase
+print(f"If IQ increases by 15 points, wage is estimated to increase by ${wage_increase:.2f}")
+print(f"\nR-squared: {model_wage.rsquared:.4f}")
+```
+Estimated equation: wage = 116.99 + 8.30 * IQ
+Coefficient interpretation:
+- β₁ = 8.30 means a 1-point increase in IQ increases wage by approximately $8.30
+If IQ increases by 15 points, wage is estimated to increase by $124.55
+R-squared: 0.0955
+IQ does not explain most of the variation in wage, as indicated by the low R-squared value of 0.0955, meaning that only about 9.55% of the variation in wages can be explained by IQ alone. This suggests that there are many other factors influencing wages that are not captured by IQ in this simple regression model. 
+### (iii) Now, estimate a model where each one-point increase in IQ has the same percentage effect on wage. If IQ increases by 15 points, what is the approximate percentage increase in predicted wage?
+```{python}
+# Estimate log(wage) = β₀ + β_1 * IQ + u
+y_log = np.log(wage2['wage'])
+model_log_wage = sm.OLS(y_log, X).fit()
+print("=== LOG WAGE VS IQ ===")
+print(model_log_wage.summary())
+# Extract coefficients for interpretation
+beta_0_log = model_log_wage.params[0]
+beta_1_log = model_log_wage.params[1]
+print(f"\n=== INTERPRETATION ===")
+print(f"Estimated equation: log(wage) = {beta_0_log:.4f} + {beta_1_log:.4f} * IQ")
+print(f"Coefficient interpretation:")
+print(f"- β_1 = {beta_1_log:.4f} means a 1-point increase in IQ increases wage by approximately {beta_1_log*100:.2f}%")
+# Approximate percentage increase in wage for a 15-point increase in IQ
+iq_increase = 15
+percentage_increase = beta_1_log * iq_increase * 100
+print(f"If IQ increases by 15 points, wage is estimated to increase by approximately {percentage_increase:.2f}%")
+```
+
+Estimated equation: log(wage) = 5.8870 + 0.0088 * IQ
+Coefficient interpretation:
+- β_1 = 0.0088 means a 1-point increase in IQ increases wage by approximately 0.88%
+If IQ increases by 15 points, wage is estimated to increase by approximately 13.21%

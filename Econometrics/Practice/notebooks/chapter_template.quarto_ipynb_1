@@ -1,0 +1,264 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"Chapter X - [Chapter Title]\"\n",
+        "author: \"Solutions to Wooldridge Computer Exercises\"\n",
+        "date: \"last-modified: today\"\n",
+        "format:\n",
+        "  html: default\n",
+        "  pdf: default\n",
+        "jupyter: python3\n",
+        "---\n",
+        "\n",
+        "# Chapter X - [Chapter Title]\n",
+        "\n",
+        "**Introductory Econometrics** by Jeffrey M. Wooldridge (5th Edition)\n",
+        "\n",
+        "---\n",
+        "\n",
+        "This document contains solutions to computer exercises from Chapter X. These exercises focus on [brief description of chapter content].\n",
+        "\n",
+        "## Quarto/Markdown Hotkeys in VS Code\n",
+        "\n",
+        "| Action                | Hotkey (Windows)      | Hotkey (Mac)      | Notes                        |\n",
+        "|-----------------------|-----------------------|-------------------|------------------------------|\n",
+        "| New code cell/block   | Ctrl+Shift+`          | Cmd+Shift+`       | (Quarto: Insert Code Chunk)  |\n",
+        "| Italics               | Ctrl+I                | Cmd+I             | Wraps selection in *...*     |\n",
+        "| Bold                  | Ctrl+B                | Cmd+B             | Wraps selection in **...**   |\n",
+        "| Header (Markdown)     | Ctrl+Shift+H          | Cmd+Shift+H       | (Markdown All in One ext.)   |\n",
+        "| Inline code           | Ctrl+E                | Cmd+E             | Wraps selection in `...`     |\n",
+        "| Blockquote            | Ctrl+Shift+B          | Cmd+Shift+B       | (Markdown All in One ext.)   |\n",
+        "| Ordered List          | Ctrl+Shift+7          | Cmd+Shift+7       | (Markdown All in One ext.)   |\n",
+        "| Unordered List        | Ctrl+Shift+8          | Cmd+Shift+8       | (Markdown All in One ext.)   |\n",
+        "| Insert Link           | Ctrl+K                | Cmd+K             | (Markdown All in One ext.)   |\n",
+        "| Insert Image          | Ctrl+Shift+I          | Cmd+Shift+I       | (Markdown All in One ext.)   |\n",
+        "| Preview Markdown      | Ctrl+Shift+V          | Cmd+Shift+V       | Open preview pane            |\n",
+        "| Format Document       | Shift+Alt+F           | Shift+Option+F    | Auto-format .qmd/.md         |\n",
+        "\n",
+        "*Some hotkeys require the \"Markdown All in One\" extension for full support. Quarto code chunk hotkey may require the Quarto extension.*\n",
+        "\n",
+        "---\n",
+        "\n",
+        "## Setup"
+      ],
+      "id": "ebc3f94b"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| echo: true\n",
+        "# Standard imports\n",
+        "import numpy as np\n",
+        "import pandas as pd\n",
+        "import matplotlib.pyplot as plt\n",
+        "import seaborn as sns\n",
+        "\n",
+        "# Custom utilities\n",
+        "import sys\n",
+        "sys.path.append('..')\n",
+        "from utils import (\n",
+        "    load_wooldridge_data,\n",
+        "    summary_statistics,\n",
+        "    plot_correlation_matrix,\n",
+        "    run_ols,\n",
+        "    pretty_print_results,\n",
+        "    check_heteroskedasticity,\n",
+        "    check_multicollinearity,\n",
+        "    durbin_watson_test,\n",
+        "    plot_residuals\n",
+        ")\n",
+        "\n",
+        "# Display settings\n",
+        "pd.set_option('display.max_columns', None)\n",
+        "pd.set_option('display.precision', 4)\n",
+        "print(\"Setup complete!\")"
+      ],
+      "id": "13bb590f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "\n",
+        "## Computer Exercise C1\n",
+        "\n",
+        "**Problem Statement:**\n",
+        "\n",
+        "[Copy the problem statement from the textbook here]\n",
+        "\n",
+        "**Dataset:** [dataset_name]\n",
+        "\n",
+        "### Data Loading and Initial Exploration"
+      ],
+      "id": "dd76f329"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Load the dataset\n",
+        "df = load_wooldridge_data('dataset_name')\n",
+        "\n",
+        "# Display first few rows\n",
+        "df.head()"
+      ],
+      "id": "ee678563",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Summary statistics\n",
+        "summary_statistics(df)"
+      ],
+      "id": "4646873f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Part (i): [Description]"
+      ],
+      "id": "a800a613"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Your code here"
+      ],
+      "id": "5b5bcad7",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Part (ii): Regression Analysis"
+      ],
+      "id": "4fafca4b"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Run OLS regression\n",
+        "results = run_ols(\n",
+        "    data=df,\n",
+        "    dependent='y_variable',\n",
+        "    independent=['x1', 'x2', 'x3']\n",
+        ")\n",
+        "pretty_print_results(results)"
+      ],
+      "id": "d56584e9",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "**Interpretation:**\n",
+        "\n",
+        "- Coefficient on x1: [interpretation]\n",
+        "- Statistical significance: [interpretation]\n",
+        "- R-squared: [interpretation]\n",
+        "\n",
+        "### Diagnostics"
+      ],
+      "id": "dbd3faf0"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Heteroskedasticity\n",
+        "check_heteroskedasticity(results)\n",
+        "\n",
+        "# Multicollinearity\n",
+        "check_multicollinearity(df, ['x1', 'x2', 'x3'])\n",
+        "\n",
+        "# Autocorrelation (if time series)\n",
+        "durbin_watson_test(results)\n",
+        "\n",
+        "# Residual plots\n",
+        "plot_residuals(results)"
+      ],
+      "id": "4201ca81",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "\n",
+        "## Computer Exercise C2\n",
+        "\n",
+        "**Problem Statement:**\n",
+        "\n",
+        "[Copy the problem statement here]\n",
+        "\n",
+        "**Dataset:** [dataset_name]\n",
+        "\n",
+        "### Part (i): [Description]"
+      ],
+      "id": "e6d7b9b0"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Your code here"
+      ],
+      "id": "7de73e1e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "\n",
+        "## Notes and Key Takeaways\n",
+        "\n",
+        "- Key insight 1\n",
+        "- Key insight 2\n",
+        "- Important formula or concept\n",
+        "\n",
+        "---\n",
+        "\n",
+        "## References\n",
+        "\n",
+        "- Wooldridge, J. M. (2013). *Introductory Econometrics: A Modern Approach* (5th ed.). Cengage Learning.\n",
+        "- Dataset source: https://faculty.utrgv.edu/diego.escobari/teaching/Datasets.html"
+      ],
+      "id": "55f5ba6a"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "D:\\Users\\achyu\\anaconda\\envs\\econ\\share\\jupyter\\kernels\\python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

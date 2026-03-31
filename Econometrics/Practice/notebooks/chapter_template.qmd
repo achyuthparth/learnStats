@@ -1,0 +1,142 @@
+---
+title: "Chapter X - [Chapter Title]"
+author: "Solutions to Wooldridge Computer Exercises"
+date: "last-modified: today"
+format:
+  html: default
+  pdf: default
+jupyter: python3
+---
+
+# Chapter X - [Chapter Title]
+
+**Introductory Econometrics** by Jeffrey M. Wooldridge (5th Edition)
+
+---
+
+## Setup
+
+```{python}
+#| echo: true
+# Standard imports
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Custom utilities
+import sys
+sys.path.append('..')
+from utils import (
+    load_wooldridge_data,
+    summary_statistics,
+    plot_correlation_matrix,
+    run_ols,
+    pretty_print_results,
+    check_heteroskedasticity,
+    check_multicollinearity,
+    durbin_watson_test,
+    plot_residuals
+)
+
+# Display settings
+pd.set_option('display.max_columns', None)
+pd.set_option('display.precision', 4)
+print("Setup complete!")
+```
+
+---
+
+## Computer Exercise C1
+
+**Problem Statement:**
+
+[Copy the problem statement from the textbook here]
+
+**Dataset:** [dataset_name]
+
+### Data Loading and Initial Exploration
+
+```{python}
+# Load the dataset
+df = load_wooldridge_data('dataset_name')
+
+# Display first few rows
+df.head()
+```
+
+```{python}
+# Summary statistics
+summary_statistics(df)
+```
+
+### Part (i): [Description]
+
+```{python}
+# Your code here
+```
+
+### Part (ii): Regression Analysis
+
+```{python}
+# Run OLS regression
+results = run_ols(
+    data=df,
+    dependent='y_variable',
+    independent=['x1', 'x2', 'x3']
+)
+pretty_print_results(results)
+```
+
+**Interpretation:**
+
+- Coefficient on x1: [interpretation]
+- Statistical significance: [interpretation]
+- R-squared: [interpretation]
+
+### Diagnostics
+
+```{python}
+# Heteroskedasticity
+check_heteroskedasticity(results)
+
+# Multicollinearity
+check_multicollinearity(df, ['x1', 'x2', 'x3'])
+
+# Autocorrelation (if time series)
+durbin_watson_test(results)
+
+# Residual plots
+plot_residuals(results)
+```
+
+---
+
+## Computer Exercise C2
+
+**Problem Statement:**
+
+[Copy the problem statement here]
+
+**Dataset:** [dataset_name]
+
+### Part (i): [Description]
+
+```{python}
+# Your code here
+```
+
+---
+
+## Notes and Key Takeaways
+
+- Key insight 1
+- Key insight 2
+- Important formula or concept
+
+---
+
+## References
+
+- Wooldridge, J. M. (2013). *Introductory Econometrics: A Modern Approach* (5th ed.). Cengage Learning.
+- Dataset source: https://faculty.utrgv.edu/diego.escobari/teaching/Datasets.html
